@@ -11,21 +11,21 @@
 
 <p>miRTarVis+ is a web-based interactive visual analytics tool for microRNA target predictions.</p>
 
-<p>In this document, I will introduce you how to use miRTarVis+ step by step.</p>
+<p>In this document, I will introduce how to use miRTarVis+ step by step.</p>
 
 <h3>Requirements</h3>
 
 <ul>
-	<li>Recommended using the latest version of Chrome and Safari</li>
-	<li>Currently, it is NOT TESTED for Internet Explorer</li>
-	<li>Minimum screen resolution: 960 x 720 px</li>
+	<li>Recommend using latest version of Chrome or Safari (or possibly, Firefox)</li>
+	<li>Currently, it is <em>NOT TESTED</em> for Internet Explorer (IE)</li>
+	<li>Minimum screen resolution of 960 x 720 px</li>
 </ul>
 
 <h3>Access to miRTarVis+</h3>
 
 <ul>
 	<li><a href="http://sehilyi.com/mirtarvisplus/">Link to miRTarVis+</a></li>
-	<li><a href="http://hcil.snu.ac.kr/research/mirtarvisplus">Research page of miRTarVis+</a> @ SNU-HCIL</li>
+	<li><a href="http://hcil.snu.ac.kr/research/mirtarvisplus">Research page of miRTarVis+</a></li>
 </ul>
 
 <h3>Main interface of miRTarVis+: step-by-step navigation</h3>
@@ -38,64 +38,96 @@
 
 <p>Here, I will show you how to use miRTarVis+ with a randomly generated sample miRNA-mRNA expression profile data.</p>
 
-<h4>Input data</h4>
+<h3>Input data</h3>
 
 <p>From the <a href="http://hcil.snu.ac.kr/research/mirtarvisplus">research page of miRTarVis+</a>, you can download example data of miRNA and mRNA expression profile data. </p>
 
-<p>They are CSV format file, whose first row contains sample names and their first column contains miRBase miRNA ID for miRNA or gene symbols for mRNA. These two files contain expression level for multiple samples all miRNAs or mRNAs. And for each miRNA or mRNA-sample, they measured twice (treatment vs. control). All values in the example data were randomly generated in the range of 0 ~ 1000.</p>
+<p>They are CSV format files, whose first row contain sample names and first column contain miRBase miRNA IDs for miRNAs or gene symbols for mRNAs. These two files contain expression level for multiple samples of all miRNAs or mRNAs. And for each miRNA or mRNA-sample, they measured twice (treatment vs. control). All values in the example data were randomly generated in the range of 0 ~ 1000.</p>
 
-<figure><img src="http://hcil.snu.ac.kr/~rati/mirtarvis/images/example_miRNA_expression_data.PNG"/></figure>
+<figure><img src="figures/rawdata.png"/></figure>
 
-<h4>Load data</h4>
+<h3>Load data</h3>
 
-<p>In the load menu, you can see five types of input data on the left side. Select &quot;Paired Two-sample&quot; (which is selected by default), and choose two files, one for a miRNA expression file and the other for a mRNA expression file. (Please do not confuse with the order of the two files :D) Select the Load Data button on the below to start loading data. You can see loading progress. Be patient, when loading large data. </p>
+<p>In the load menu, you can see five types of input data on the left side. Select &quot;Paired Two-sample&quot; (which is selected by default), and choose two files, one for a miRNA expression file and the other for a mRNA expression file. (Please do not confuse with the order of the two files!) Select the Load Data button on the below to start loading data. You can see loading progress with the progress bar on the right.</p>
 
-<p>After loading these two data, miRTarVis+ calculates p-value and fold change right after the data load. Also, it shows distributions of p-value and fold change with histograms. The image on the below shows how miRTarVis+ looks like when loading is finished.</p>
+<p>After loading these two data, miRTarVis+ calculates <em>p</em>-value and fold change right after the data load. Also, it shows distributions of <em>p</em>-value and fold change with histograms. The image on the below shows how miRTarVis+ looks like when loading is finished.</p>
 
 <figure><img src="figures/Figure.t.2.png"/></figure>
 
-<h4>Filter</h4>
+<h3>Filter</h3>
 
-<p>Let&#39;s go to the next step. We want to search for differentially expressed miRNAs and mRNAs. As we have p-value for each miRNA or mRNA, it seems a good idea to use p-value to identify differentially expressed miRNAs and mRNAs. Let&#39;s click Filter menu in the navigation. Then, it will show the filtering interface. Let’s filter the data by p-value as the value of 0.05 for both miRNA and mRNA.</p>
+<p>We want to search for differentially expressed miRNAs and mRNAs. As we have <em>p</em>-value for each miRNA or mRNA, it seems a good idea to use <em>p</em>-value to identify differentially expressed miRNAs and mRNAs. Let&#39;s click the Filter menu in the navigation. Then, it will show the filtering interface. Let’s filter the data by <em>p</em>-value by adjusting the threshold as 0.05 for both miRNA and mRNA. You can see that, now, the resulting histograms look different with the initial ones.</p>
 
 <figure><img src="figures/Figure.t.3.png"/></figure>
 
-<h4>Predict</h4>
+<h3>Predict</h3>
 
 <p>The next step is prediction. miRTarVis+ searches for possible miRNA-target pairs for the filtered data. miRTarVis+ supports two sequence-based prediction algorithms (TargetScan and microRNA.org) and four expression profile-based prediction algorithms (correlation analysis, mutual information, GenMiR++, and MINE analysis). </p>
 
-<p>For now, let&#39;s use the simplest one, the correlation analysis. It searches for miRNA-mRNA pairs which have high correlation coefficients. See this image first.</p>
+<p>For now, let&#39;s use the simplest one, the correlation analysis. It searches for miRNA-mRNA pairs which have high correlation coefficients. I already conducted the correlation analysis, and the result looks like this.</p>
 
-<figure><img src="figures/Figure5.png"/></figure>
+<figure><img src="figures/predict.png"/></figure>
 
-<p>These are results of target prediction by correlation analysis. Let&#39;s see parameters of prediction algorithms.</p>
+<p>First of all, let&#39;s understand parameters of prediction algorithms.</p>
 
 <ul>
-	<li><em>Top N Interactions</em>: Maximum number of resulting miRNA-mRNA pairs in terms of prediction values. As we set 100 to this parameter, miRTarVis+ gave us top 100 miRNA-mRNA pairs who scored high correlation coefficient.</li>
-	<li><em>Start with</em>: Search miRNA-mRNA pairs that is also predicted by a certain sequence-based prediction algorithm (i.e., TargetScan or microRNA.org). Starting expression profile based prediction from sequence-based prediction improves biological significance of prediction result.</li>
-	<li><em>Cutoff</em>: Remain only miRNA-mRNA pairs whose absolute value of correlation coefficient is above this value.</li>
+	<li><em>Top N Interactions</em>: Maximum number of resulting miRNA-mRNA pairs in terms of prediction values. As we set 100 to this parameter, miRTarVis+ gave us top 100 miRNA-mRNA pairs who scored high |correlation coefficient|.</li>
+	<li><em>Start with</em>: Search miRNA-mRNA pairs that is also predicted by a certain sequence-based prediction algorithm (i.e., TargetScan or microRNA.org). Starting expression profile based prediction from sequence-based prediction would improves biological significance of prediction result.</li>
+	<li><em>Cutoff</em>: Remain only miRNA-mRNA pairs whose |correlation coefficient| is above this value.</li>
 	<li><em>Correlation Type</em>: Select between Pearson or Spearman coefficients</li>
 	<li><em>Negative Correlation</em>: Remain pairs whose correlation coefficient are negative.</li>
-	<li><em>Change Direction</em>: We can filter miRNA-mRNA pairs by their fold change direction. Using this parameter, we can expect better prediction results.</li>
+	<li><em>Change Direction</em>: We can filter miRNA-mRNA pairs by their fold change direction.</li>
 </ul>
 
-<p>After adjusting parameters, press Start button, then, miRTarVis+ will show the results in a table after finishing calculation.</p>
+<p>After adjusting parameters, press the Predict button, then, miRTarVis+ will show the results in a table after finishing calculation.</p>
 
-<h4>Visualization</h4>
+<p>Now, we have a miRNA target prediction result using Spearman correlation. Let’s move to the visualization step to visualize the result.</p>
 
-<p>Now, we have miRNA-mRNA pairs which are predicted by algorithms! miRTarVis+ visualizes the miRNA-mRNA network to help you understand the miRNA-mRNA network structure. Traditionally, this kind of network is visualized using a node-link diagram, and miRTarVis+ also supports a node-link diagram. </p>
+<h3>Visualization</h3>
 
-<figure><img src="figures/Figure3.png"/></figure>
+<p>In the visualization step, there are three tabs for three visualizations: Prediction Overview, Node Link Diagram, and Treemap.</p>
 
-<p>You can select a node and highlight its neighbors, or you can move a node by dragging. If you click on a miRNA and shift-click on another miRNA, then miRTarVIs+ will highlight all their common targets. miRTarVis supports zoom in/out using simple mouse wheel and drag interactions. Please try this yourselves!</p>
+<p>Let’s look at the Prediction Overview first.</p>
 
-<p>In addition, miRTarVis shows the network in an interactive treemap visualization. See the following image.</p>
+<h5>Prediction Overview</h5>
 
-<figure><img src="figures/Figure4.png"/></figure>
+<figure><img src="figures/PO1.png"/></figure>
+
+<p>This overview shows the overall information about prediction results. In the visualization (on the left), columns represent prediction algorithms supported in miRTarVis+, and rows represent subset among all results. Since we only have a result using correlation coefficient, only first column is enabled, and there is only one row. At the end of each row, there is a bar which represent the number of miRNA-mRNA pairs in the subset. As we set the parameter of Top N Interactions as 100 when conducting prediction algorithm, we have 100 miRNA-mRNA pairs!</p>
+
+<p>Now, we want to see the result in detail using Node Link Diagram and Treemap. So let’s click on the bar to select the bar containing 100 miRNA-mRNA pairs.</p>
+
+<figure><img src="figures/PO2.png"/></figure>
+
+<p>miRTarVis+ shows all 100 pairs with table on the right.</p>
+
+<h5>Node Link Diagram and Treemap</h5>
+
+<p>Now, miRTarVis+ visualizes the selected miRNA-mRNA pairs to help you understand the miRNA-mRNA network structure. Traditionally, this kind of network is visualized using a node-link diagram, and miRTarVis+ also supports a node-link diagram.</p>
+
+<figure><img src="figures/nld1.png"/></figure>
+
+<p>You can select a node and highlight its neighbors, or you can move a node by dragging. If you click on a miRNA and shift-click on another miRNA, then miRTarVIs+ will highlight all their common targets. miRTarVis supports zoom in/out using simple mouse wheel and drag interactions. On the top left corner, there is Menu where you can find lots of useful features for the node-link diagram. The features include</p>
+
+<ul>
+	<li><em>Color Scheme</em>: Change color scheme for encoding nodes.</li>
+	<li><em>Optimal Label Placement</em>: Place label around nodes to minimize occlusion. This will take a few seconds. Please be patient when using this feature.</li>
+	<li><em>Node Label Visibility</em>: Toggle the label visibility. The visualization become to slow when there is so many nodes in the visualization. So, sometimes, it would be a good idea to hide labels for better performance.</li>
+	<li><em>Relayout</em>: Relayout the network.</li>
+	<li><em>Simulation</em>: Restart of stop simulation. When the simulation is stoped, all nodes will be placed in their position, and you can drag each node without changing the placement of other nodes.</li>
+	<li><em>Sticky Nodes</em>: When using this feature, you can stick the position of each node if you click and drag the nodes to designated place, even if the simulation is being used.</li>
+	<li> <em>Fade Out Effect</em>: When this feature is enabled, you can focus on the part of the network. When moving your mouse pointer on a node, miRTarVis+ will dim nodes and links which are not directly connected with the node.</li>
+</ul>
+
+<p>After using some features in the Menu, the network looks better to me :)</p>
+
+<figure><img src="figures/nld2.png"/></figure>
+
+<p>In addition, miRTarVis+ shows the network in an interactive treemap visualization. See the following image.</p>
+
+<figure><img src="figures/treemap.png"/></figure>
 
 <p>This visualization shows the same network that node-link diagrams did. This two-level treemap shows miRNAs as first level nodes and their targets as their child nodes. </p>
-
-<p>If multiple miRNAs target the same miRNA, then it is hard to catch such situation in the treemap visualization. To overcome this limitation, miRTarVis+ gives a clue to see such relationships. If you hover mouse pointer over an mRNA node, then the treemap will only highlight that mRNA and its parent nodes.</p>
 
 <p>In both visualizations, color represents fold change values of miRNAs and mRNAs.</p>
 
@@ -109,7 +141,7 @@
 
 <p>a dialog will appears like this. It shows all predicted targets of miRNA (hsa-mir-106a for here). After setting species and ontology as you want, let&#39;s click &#39;Open GO Web Service&#39; button in the dialog. Then, enrichment analysis result will appear in your default browser. Sometimes the network request times out when there are many target mRNAs, so no results will appear after long time. In such circumstances, please try it again later.</p>
 
-<p>This is the end of the miRTarVis+ tutorial. I wish I can update this document in near future :-)</p>
+<p>This is the end of the miRTarVis+ tutorial. I wish I can update this document in the near future :-)</p>
 
 <p>If you have any question, or find some bugs while using miRTarVis+, please feel free to contact me (email: shlyi@hcil.snu.ac.kr).</p>
 
